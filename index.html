@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character Foundry | Stone River Media</title>
+  <style>
+    :root{--bg:#050505;--panel:#111;--text:#f4efe6;--muted:#b8ad9f;--gold:#c9a75d;--line:rgba(201,167,93,.28)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:radial-gradient(circle at top left,rgba(201,167,93,.16),transparent 35%),#050505;color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+    .wrap{width:min(1180px,92%);margin:auto}
+    header{position:sticky;top:0;background:rgba(0,0,0,.9);border-bottom:1px solid var(--line);z-index:5}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+    .brand{font-weight:900;text-transform:uppercase;letter-spacing:2px}
+    a{color:inherit;text-decoration:none}
+    .btn{display:inline-flex;padding:13px 20px;border:1px solid var(--gold);background:rgba(201,167,93,.13);color:var(--text);text-transform:uppercase;letter-spacing:1px;cursor:pointer}
+    .btn.alt{background:transparent;color:var(--muted);border-color:var(--line)}
+    .hero{text-align:center;padding:90px 0}
+    .badge{color:var(--gold);text-transform:uppercase;letter-spacing:4px;font-size:.78rem;margin-bottom:18px}
+    h1{font-size:clamp(2.2rem,7vw,5.2rem);line-height:1;text-transform:uppercase}
+    h2{font-size:clamp(1.7rem,4vw,3rem);text-transform:uppercase;margin-bottom:12px}
+    .hero p,.muted{color:var(--muted);max-width:850px;margin:20px auto}
+    section{padding:60px 0;border-top:1px solid rgba(255,255,255,.07)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card,.preview,fieldset{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.022));border:1px solid var(--line);padding:24px}
+    .card h3,.preview h3{color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+    .builder{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+    form{display:grid;gap:16px}
+    legend{color:var(--gold);padding:0 10px;text-transform:uppercase;letter-spacing:1px}
+    label{display:grid;gap:7px;color:var(--gold);font-size:.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+    input,select,textarea{width:100%;padding:13px;background:#070707;border:1px solid var(--line);color:var(--text);font:inherit}
+    textarea{min-height:190px;resize:vertical}
+    .check{display:flex;gap:10px;align-items:flex-start;color:var(--muted);text-transform:none;letter-spacing:0}
+    .check input{width:auto;margin-top:5px}
+    .screen{background:#090909;border:1px solid rgba(255,255,255,.08);padding:16px;white-space:pre-wrap;color:#ddd;min-height:300px;font-family:Consolas,monospace;font-size:.88rem}
+    .status{padding:12px;border-left:3px solid var(--gold);background:rgba(201,167,93,.08);color:var(--muted);margin:14px 0}
+    footer{text-align:center;color:#777;border-top:1px solid var(--line);padding:32px 0}
+    @media(max-width:900px){.grid,.builder{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header><nav class="wrap"><a class="brand" href="#">Character Foundry</a><a class="btn" href="#builder">Start Build</a></nav></header>
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="badge">Private Stone River Media System</div>
+    <h1>Realistic Digital Character Builder</h1>
+    <p>Paste one complete Stone River character profile, attach a Google Drive photo folder link, and generate a production-ready character brief for realistic AI people, canon reference packs, tattoo maps, and future 3D production.</p>
+    <a class="btn" href="#builder">Create Character</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="grid">
+      <div class="card"><h3>1. Paste Character</h3><p class="muted">Use one master Character Information field from Stone River/Formspree.</p></div>
+      <div class="card"><h3>2. Add Photos</h3><p class="muted">Paste the Google Drive folder containing headshots, full body photos, tattoos, and references.</p></div>
+      <div class="card"><h3>3. Generate Brief</h3><p class="muted">Create a clean production brief for image generation, 3D modeling, or future automation.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="builder">
+  <div class="wrap">
+    <h2>Character Build Intake</h2>
+    <p class="muted">This version prepares the character for production. True automatic 3D generation requires a backend/model pipeline added later.</p>
+    <div class="builder">
+      <form action="https://formspree.io/f/xojzwwlv" method="POST">
+        <fieldset>
+          <legend>Project</legend>
+          <label>Character Name<input id="characterName" name="character_name" placeholder="Ava Elizabeth Stone" required></label>
+          <label>Character Type
+            <select id="characterType" name="character_type">
+              <option>AI Influencer</option><option>Digital Model</option><option>Brand Ambassador</option><option>Subscription Creator</option><option>Future 3D Character</option>
+            </select>
+          </label>
+          <label>Email<input type="email" name="email" placeholder="you@email.com"></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Character Information</legend>
+          <label>One Master Character Field
+            <textarea id="characterInfo" name="character_information" placeholder="Paste the full Stone River character profile here..." required></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Photos</legend>
+          <label>Google Drive Photo Folder
+            <input id="photoLink" type="url" name="photo_folder_link" placeholder="https://drive.google.com/drive/folders/...">
+          </label>
+          <label>Photo Notes
+            <textarea id="photoNotes" name="photo_notes" placeholder="Example: Tattoo references do not rotate correctly. Keep tattoos centered and anatomically correct."></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Outputs</legend>
+          <label class="check"><input type="checkbox" name="outputs" value="Character Bible" checked> Character Bible</label>
+          <label class="check"><input type="checkbox" name="outputs" value="Canon Reference Pack" checked> Canon Reference Pack</label>
+          <label class="check"><input type="checkbox" name="outputs" value="3D Production Brief" checked> 3D Production Brief</label>
+          <label class="check"><input type="checkbox" name="outputs" value="Tattoo Orientation Guide" checked> Tattoo Orientation Guide</label>
+          <label class="check"><input type="checkbox" name="outputs" value="AI Prompt Pack" checked> AI Prompt Pack</label>
+          <input type="hidden" id="productionBriefField" name="production_brief">
+          <button class="btn" type="button" onclick="generateBrief()">Generate Production Brief</button>
+          <button class="btn alt" type="submit">Send To Stone River</button>
+        </fieldset>
+      </form>
+
+      <aside class="preview">
+        <h3>Production Brief Preview</h3>
+        <div id="status" class="status">Waiting for character information.</div>
+        <div id="briefPreview" class="screen">No brief generated yet.</div>
+        <button class="btn" style="margin-top:14px" onclick="copyBrief()">Copy Brief</button>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap">© 2026 Stone River Media — Private Character Foundry</div></footer>
+
+<script>
+function selectedOutputs(){return Array.from(document.querySelectorAll('input[name="outputs"]:checked')).map(x=>x.value).join(", ");}
+function generateBrief(){
+  const name=document.getElementById("characterName").value.trim()||"Unnamed Character";
+  const type=document.getElementById("characterType").value;
+  const info=document.getElementById("characterInfo").value.trim();
+  const link=document.getElementById("photoLink").value.trim();
+  const notes=document.getElementById("photoNotes").value.trim();
+  if(!info){document.getElementById("status").textContent="Add character information first.";return;}
+  const brief=`STONE RIVER CHARACTER FOUNDRY — PRODUCTION BRIEF
+
+CHARACTER NAME:
+${name}
+
+CHARACTER TYPE:
+${type}
+
+PHOTO REFERENCE FOLDER:
+${link || "No photo folder provided."}
+
+REQUESTED OUTPUTS:
+${selectedOutputs()}
+
+CHARACTER INFORMATION:
+${info}
+
+PHOTO / REFERENCE NOTES:
+${notes || "No additional notes."}
+
+BUILD PRIORITIES:
+1. Preserve character identity.
+2. Preserve facial structure, hair, eyes, body proportions, and distinctive features.
+3. Preserve approved tattoos and tattoo placement.
+4. Use reference images as source of truth.
+5. Maintain realistic photographic quality.
+6. Avoid cartoon, fantasy, over-retouched, or artificial-looking results.
+
+3D / MODELING NOTES:
+Create this character as a realistic digital human reference. If building in 3D, attach tattoos as locked body-surface decals so they rotate naturally with the body. Do not redraw tattoos from imagination. Use photo references and character information together. Reference images always override generated assumptions.
+
+QUALITY CONTROL:
+Reject outputs with changed tattoos, added tattoos, incorrect foot placement, mirrored body markings, changed hair color, changed eye color, unrealistic skin, or major facial drift.`;
+  document.getElementById("briefPreview").textContent=brief;
+  document.getElementById("productionBriefField").value=brief;
+  document.getElementById("status").textContent="Production brief generated and ready to submit.";
+}
+function copyBrief(){
+  navigator.clipboard.writeText(document.getElementById("briefPreview").textContent);
+  document.getElementById("status").textContent="Production brief copied.";
+}
+</script>
+</body>
+</html>
