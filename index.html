@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stone River Character Foundry | Private AI Character Intake</title>
+  <meta name="description" content="Private Stone River Media character foundry intake system for building realistic AI-ready digital people, character bibles, tattoo maps, prompts, and reference packages." />
+  <style>
+    :root{
+      --bg:#050505;
+      --panel:#101010;
+      --panel2:#171717;
+      --text:#f4f0e8;
+      --muted:#b9b1a5;
+      --gold:#d1bd8b;
+      --gold2:#7b6b48;
+      --line:rgba(209,189,139,.23);
+      --danger:#d77;
+      --ok:#a6d7a6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: Georgia, "Times New Roman", serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 5%, rgba(209,189,139,.13), transparent 30%),
+        radial-gradient(circle at 80% 15%, rgba(255,255,255,.06), transparent 28%),
+        linear-gradient(180deg,#000 0%,#080808 50%,#030303 100%);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1180px,92%);margin:0 auto}
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(0,0,0,.88);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(12px);
+    }
+    nav{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:16px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-transform:uppercase;letter-spacing:2px;font-weight:bold}
+    .mark{
+      width:44px;height:44px;border-radius:50%;
+      background:#020202;border:1px solid rgba(255,255,255,.22);
+      position:relative;box-shadow:inset -8px -8px 18px rgba(255,255,255,.055), inset 8px 8px 24px rgba(0,0,0,1);
+      flex:none;
+    }
+    .mark:after{
+      content:"";position:absolute;top:8%;left:48%;width:11px;height:84%;
+      background:#0b0b0b;border-radius:999px;transform:translateX(-50%) rotate(18deg);
+      box-shadow:inset 3px 0 8px rgba(255,255,255,.07), inset -4px 0 10px rgba(0,0,0,.9);
+    }
+    .links{display:flex;gap:22px;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px}
+    .links a:hover{color:var(--gold)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:13px 22px;min-height:48px;border:1px solid var(--gold2);
+      background:linear-gradient(180deg,rgba(209,189,139,.18),rgba(209,189,139,.05));
+      color:var(--text);text-transform:uppercase;letter-spacing:1.8px;font-size:.78rem;cursor:pointer;
+    }
+    .btn.alt{background:transparent;border-color:var(--line);color:var(--muted)}
+    .hero{min-height:82vh;display:grid;place-items:center;text-align:center;padding:80px 0;position:relative;overflow:hidden}
+    .hero:before{
+      content:"";position:absolute;width:780px;height:780px;border-radius:50%;
+      background:radial-gradient(circle,rgba(209,189,139,.14),transparent 66%);
+      top:6%;left:50%;transform:translateX(-50%);
+    }
+    .hero-inner{position:relative;z-index:2}
+    .hero .mark{width:150px;height:150px;margin:0 auto 26px}
+    .hero .mark:after{width:33px}
+    .eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:5px;font-size:.78rem;margin-bottom:16px}
+    h1{font-size:clamp(2.35rem,7vw,5.4rem);line-height:1.02;text-transform:uppercase;letter-spacing:4px;text-shadow:0 3px 0 #000}
+    .hero p{max-width:880px;margin:22px auto 0;color:var(--muted);font-size:1.08rem}
+    .btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+    section{padding:72px 0;border-top:1px solid rgba(255,255,255,.06)}
+    .title{text-align:center;margin-bottom:34px}
+    .title span{color:var(--gold);text-transform:uppercase;letter-spacing:4px;font-size:.76rem}
+    h2{font-size:clamp(1.8rem,4.2vw,3.2rem);line-height:1.1;text-transform:uppercase;letter-spacing:3px;margin-top:8px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid.two{grid-template-columns:repeat(2,1fr)}
+    .card,.panel{
+      background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+      border:1px solid var(--line);
+      padding:26px;
+      box-shadow:0 18px 42px rgba(0,0,0,.25);
+    }
+    .card h3,.panel h3{color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+    .card p,.muted,.card li,.panel li{color:var(--muted)}
+    ul{padding-left:18px}
+    .split{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
+    .steps{display:grid;gap:14px}
+    .step{display:flex;gap:15px;background:rgba(255,255,255,.035);border:1px solid var(--line);padding:17px}
+    .num{width:34px;height:34px;border:1px solid var(--gold2);display:grid;place-items:center;color:var(--gold);flex:none}
+    form{display:grid;gap:18px}
+    fieldset{border:1px solid var(--line);padding:22px;background:rgba(255,255,255,.035)}
+    legend{color:var(--gold);text-transform:uppercase;letter-spacing:2px;padding:0 10px;font-size:.82rem}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-grid.three{grid-template-columns:repeat(3,1fr)}
+    label{display:grid;gap:7px;color:var(--gold);font-size:.76rem;text-transform:uppercase;letter-spacing:1.8px}
+    input,select,textarea{
+      width:100%;background:#070707;border:1px solid var(--line);
+      color:var(--text);padding:13px;font:inherit;border-radius:0;
+    }
+    textarea{min-height:120px;resize:vertical}
+    input[type=file]{color:var(--muted)}
+    .check{display:flex;gap:10px;align-items:flex-start;color:var(--muted);text-transform:none;letter-spacing:0;font-size:.92rem}
+    .check input{width:auto;margin-top:5px}
+    .notice{border-left:3px solid var(--gold2);padding-left:14px;color:var(--muted);font-size:.94rem}
+    .private{color:var(--danger);font-weight:bold}
+    .ok{color:var(--ok)}
+    footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:#82796b;font-size:.9rem}
+    @media(max-width:900px){
+      .links{display:none}
+      .grid,.grid.two,.split,.form-grid,.form-grid.three{grid-template-columns:1fr}
+      h1{letter-spacing:2px}
+      .hero{min-height:auto}
+    }
+  </style>
+</head>
+<body id="top">
+<header>
+  <nav class="wrap">
+    <a href="#top" class="brand"><span class="mark"></span><span>Character Foundry</span></a>
+    <div class="links">
+      <a href="#workflow">Workflow</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#intake">New Character</a>
+    </div>
+    <a href="#intake" class="btn">Start Intake</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-inner wrap">
+    <div class="mark"></div>
+    <div class="eyebrow">Private Stone River Media Tool</div>
+    <h1>Build Realistic AI-Ready Digital People</h1>
+    <p>
+      Internal character intake system for creating realistic digital personalities, canon reference packs,
+      tattoo maps, character bibles, prompt libraries, and future 3D-ready production notes.
+    </p>
+    <p class="private">Private use only. Not a public client-facing product.</p>
+    <div class="btn-row">
+      <a href="#intake" class="btn">Create New Character</a>
+      <a href="#requirements" class="btn alt">View Upload Requirements</a>
+    </div>
+  </div>
+</section>
+
+<section id="workflow">
+  <div class="wrap">
+    <div class="title">
+      <span>Internal Workflow</span>
+      <h2>From Photos To Canon Character</h2>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>1. Intake</h3><p>Upload headshots, full-body references, personality notes, appearance changes, tattoos, and content goals.</p></div>
+      <div class="card"><h3>2. Character Bible</h3><p>Build the identity, backstory, voice, appearance rules, wardrobe direction, and canon consistency sheet.</p></div>
+      <div class="card"><h3>3. Reference Pack</h3><p>Create approved hero shots, headshots, full-body references, social images, and AI deployment notes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="requirements">
+  <div class="wrap split">
+    <div>
+      <div class="title" style="text-align:left;margin-bottom:20px">
+        <span>Upload Standards</span>
+        <h2>What Every Character Needs</h2>
+      </div>
+      <p class="notice">
+        This tool is built to reduce the problem we ran into with Ava: inconsistent tattoos, wrong angles,
+        flipped feet, drifting body features, and unreliable back shots. Better references create better characters.
+      </p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div><strong>6 Headshots</strong><p class="muted">Front, slight left, slight right, smile, serious, natural expression.</p></div></div>
+      <div class="step"><div class="num">2</div><div><strong>2 Full Body Photos</strong><p class="muted">One front view and one rear or side view whenever possible.</p></div></div>
+      <div class="step"><div class="num">3</div><div><strong>Character Bible</strong><p class="muted">Name, age, birthplace, personality, backstory, style, audience, and goals.</p></div></div>
+      <div class="step"><div class="num">4</div><div><strong>Tattoo / Body Map</strong><p class="muted">Exact side, exact placement, what is allowed, and what is forbidden.</p></div></div>
+      <div class="step"><div class="num">5</div><div><strong>Output Goal</strong><p class="muted">HeyGen, Foxy AI, social media, subscription content, portfolio, or future 3D build.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="title">
+      <span>Output Checklist</span>
+      <h2>What This Intake Should Produce</h2>
+    </div>
+    <div class="grid two">
+      <div class="panel">
+        <h3>Character Package</h3>
+        <ul>
+          <li>Character Bible</li>
+          <li>Personality Profile</li>
+          <li>Backstory</li>
+          <li>Visual Consistency Rules</li>
+          <li>Tattoo / Body Map</li>
+          <li>Prompt Library</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Reference Package</h3>
+        <ul>
+          <li>Hero Portrait</li>
+          <li>Headshot Set</li>
+          <li>Full Body Front</li>
+          <li>Full Body Back / Covered Reference</li>
+          <li>Social Media Images</li>
+          <li>HeyGen / Foxy AI Notes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="intake">
+  <div class="wrap">
+    <div class="title">
+      <span>Private Intake Form</span>
+      <h2>Create A New Character</h2>
+      <p class="muted">Submissions go to your Formspree inbox. Replace the form endpoint if needed.</p>
+    </div>
+
+    <form action="https://formspree.io/f/xojzwwlv" method="POST" enctype="multipart/form-data">
+      <fieldset>
+        <legend>Project Information</legend>
+        <div class="form-grid">
+          <label>Project / Character Name
+            <input name="character_name" placeholder="Example: Ava Stone" required>
+          </label>
+          <label>Internal Project Code
+            <input name="project_code" placeholder="Example: AS-001">
+          </label>
+        </div>
+        <div class="form-grid">
+          <label>Requested By
+            <input name="requested_by" placeholder="Doug / Sara / Client Name">
+          </label>
+          <label>Email
+            <input type="email" name="email" placeholder="you@email.com" required>
+          </label>
+        </div>
+        <label>Primary Use
+          <select name="primary_use">
+            <option>Internal Stone River Character</option>
+            <option>AI Influencer</option>
+            <option>Virtual Model</option>
+            <option>Brand Ambassador</option>
+            <option>HeyGen Avatar</option>
+            <option>Foxy AI Character</option>
+            <option>Future 3D Character</option>
+            <option>Client Portfolio Character</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Photo Uploads</legend>
+        <label>Upload 6 Headshots
+          <input type="file" name="headshots" multiple accept="image/*">
+        </label>
+        <label>Upload 2 Full Body References
+          <input type="file" name="full_body_references" multiple accept="image/*">
+        </label>
+        <label>Upload Tattoo / Body Map References
+          <input type="file" name="tattoo_body_map" multiple accept="image/*">
+        </label>
+        <label>Additional Reference Images
+          <input type="file" name="additional_references" multiple accept="image/*">
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Physical Appearance</legend>
+        <div class="form-grid three">
+          <label>Age Range
+            <select name="age_range">
+              <option>18-24</option>
+              <option>25-34</option>
+              <option>35-44</option>
+              <option>45+</option>
+            </select>
+          </label>
+          <label>Height
+            <input name="height" placeholder="Example: 5'7&quot;">
+          </label>
+          <label>Body Type
+            <input name="body_type" placeholder="Athletic, curvy, slim, muscular">
+          </label>
+        </div>
+        <div class="form-grid three">
+          <label>Hair Color
+            <input name="hair_color" placeholder="Copper red">
+          </label>
+          <label>Hair Style
+            <input name="hair_style" placeholder="Long, wavy">
+          </label>
+          <label>Eye Color
+            <input name="eye_color" placeholder="Green">
+          </label>
+        </div>
+        <label>Skin / Distinctive Features
+          <textarea name="skin_features" placeholder="Freckles, skin tone, scars, beauty marks, etc."></textarea>
+        </label>
+        <label>Appearance Changes Requested
+          <textarea name="appearance_changes" placeholder="What should be changed from the uploaded photos?"></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tattoos & Body Rules</legend>
+        <label>Approved Tattoos
+          <textarea name="approved_tattoos" placeholder="List each tattoo, exact placement, side of body, and design rules."></textarea>
+        </label>
+        <label>Forbidden Changes
+          <textarea name="forbidden_changes" placeholder="Example: Do not add tattoos. Do not move tattoos. Right foot only. No back tattoos."></textarea>
+        </label>
+        <label>Tattoo Rotation / Angle Notes
+          <textarea name="tattoo_rotation_notes" placeholder="Describe how tattoos should appear from front, side, rear, etc."></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Character Bible</legend>
+        <div class="form-grid">
+          <label>Full Name
+            <input name="full_name" placeholder="Ava Elizabeth Stone">
+          </label>
+          <label>Birthplace / Current City
+            <input name="origin" placeholder="Nashville, TN / Indianapolis, IN">
+          </label>
+        </div>
+        <label>Personality Traits
+          <textarea name="personality_traits" placeholder="Confident, adventurous, playful, professional, mysterious, etc."></textarea>
+        </label>
+        <label>Backstory
+          <textarea name="backstory" placeholder="Where are they from? What shaped them? What do they want?"></textarea>
+        </label>
+        <label>Voice / Speaking Style
+          <textarea name="voice_style" placeholder="Southern, friendly, confident, playful, direct, storyteller, etc."></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Style & Content Direction</legend>
+        <label>Wardrobe Style
+          <textarea name="wardrobe_style" placeholder="Casual, Americana, fitness, luxury, business, swimwear, streetwear, etc."></textarea>
+        </label>
+        <label>Photography Style
+          <textarea name="photo_style" placeholder="Studio, golden hour, realistic, editorial, lifestyle, truck shots, coffee shop, etc."></textarea>
+        </label>
+        <label>Content Goals
+          <textarea name="content_goals" placeholder="Subscriptions, social media, videos, brand deals, modeling photos, etc."></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Deliverables Requested</legend>
+        <label class="check"><input type="checkbox" name="deliverables" value="character_bible"> Character Bible</label>
+        <label class="check"><input type="checkbox" name="deliverables" value="canon_reference_pack"> Canon Reference Pack</label>
+        <label class="check"><input type="checkbox" name="deliverables" value="hero_images"> Hero Images</label>
+        <label class="check"><input type="checkbox" name="deliverables" value="headshots"> Headshots</label>
+        <label class="check"><input type="checkbox" name="deliverables" value="full_body"> Full Body References</label>
+        <label class="check"><input type="checkbox" name="deliverables" value="social_media"> Social Media Kit</label>
+        <label class="check"><input type="checkbox" name="deliverables" value="heygen"> HeyGen Notes</label>
+        <label class="check"><input type="checkbox" name="deliverables" value="foxy"> Foxy AI Notes</label>
+        <label class="check"><input type="checkbox" name="deliverables" value="future_3d"> Future 3D Production Brief</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Final Notes</legend>
+        <label>Special Instructions
+          <textarea name="special_instructions" placeholder="Anything that absolutely must be followed."></textarea>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="qa_required" value="yes" checked>
+          <span>Require manual quality control before this character is considered canon-approved.</span>
+        </label>
+        <button class="btn" type="submit">Submit Character Intake</button>
+      </fieldset>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Stone River Media. Private Character Foundry System.</div>
+</footer>
+</body>
+</html>
